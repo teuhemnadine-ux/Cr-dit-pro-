@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse de Crédit Pro - Cameroun</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .header {
+        background: white;
+        padding: 25px 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header-right {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #555;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tab {
+        padding: 12px 24px;
+        background: none;
+        border: none;
+        font-size: 15px;
+        font-weight: 500;
+        color: #888;
+        cursor: pointer;
+        transition: all 0.3s;
+        border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+    }
+
+    .tab:hover {
+        color: #667eea;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        padding: 14px 28px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .result-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-top: 25px;
+    }
+
+    .result-label {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 5px;
+    }
+
+    .result-value {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .result-status {
+        display: inline-block;
+        padding: 6px 16px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .metric-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .metric-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+    }
+
+    .metric-label {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 8px;
+    }
+
+    .metric-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .score-gauge {
+        position: relative;
+        height: 200px;
+        margin: 30px 0;
+    }
+
+    .gauge-bg {
+        width: 100%;
+        height: 150px;
+        background: #f0f0f0;
+        border-radius: 100px 100px 0 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gauge-fill {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background: linear-gradient(90deg, #ff6b6b 0%, #feca57 33%, #48dbfb 66%, #1dd1a1 100%);
+        transition: width 1s ease-in-out;
+        border-radius: 100px 100px 0 0;
+    }
+
+    .gauge-value {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 48px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .gauge-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .criteria-list {
+        margin-top: 20px;
+    }
+
+    .criteria-item {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .criteria-name {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .criteria-score {
+        font-size: 18px;
+        font-weight: 700;
+        color: #667eea;
+    }
+
+    .amortization-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .amortization-table th {
+        background: #667eea;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .amortization-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 14px;
+    }
+
+    .amortization-table tr:hover {
+        background: #f8f9fa;
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border-left: 4px solid #28a745;
+    }
+
+    .alert-warning {
+        background: #fff3cd;
+        color: #856404;
+        border-left: 4px solid #ffc107;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 8px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.5s ease;
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+
+        .metric-row {
+            grid-template-columns: 1fr;
+        }
+
+        .header {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+
+    .info-tooltip {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background: #667eea;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 18px;
+        font-size: 12px;
+        cursor: help;
+        margin-left: 5px;
+    }
+
+    .select-group {
+        margin-bottom: 25px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .select-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .radio-option {
+        display: block;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .radio-option:hover {
+        border-color: #667eea;
+        background: #f0f4ff;
+    }
+
+    .radio-option input[type="radio"] {
+        margin-right: 10px;
+    }
+
+    .score-points {
+        float: right;
+        font-weight: 600;
+        color: #667eea;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🏦 CreditPro Cameroun</div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="avatar">N</div>
+                    <div>
+                        <div style="font-weight: 600;">Nadine</div>
+                        <div style="font-size: 12px; color: #888;">Analyste Crédit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+```
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Column: Simulation & Scoring -->
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('simulation')">💰 Simulation Crédit</button>
+                <button class="tab" onclick="switchTab('scoring')">📊 Scoring Client</button>
+            </div>
+
+            <!-- Tab 1: Simulation -->
+            <div id="simulation" class="tab-content active">
+                <div class="form-group">
+                    <label class="form-label">Montant du crédit (FCFA)</label>
+                    <input type="number" id="montant" class="form-input" value="5000000" oninput="calculateLoan()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Durée (mois)</label>
+                    <input type="number" id="duree" class="form-input" value="12" oninput="calculateLoan()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Taux d'intérêt annuel (%)</label>
+                    <input type="number" id="taux" class="form-input" value="18" step="0.1" oninput="calculateLoan()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Revenus mensuels (FCFA)</label>
+                    <input type="number" id="revenus" class="form-input" value="800000" oninput="calculateLoan()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Charges mensuelles (FCFA)</label>
+                    <input type="number" id="charges" class="form-input" value="250000" oninput="calculateLoan()">
+                </div>
+
+                <button class="btn btn-primary" onclick="calculateLoan()">📊 Calculer</button>
+
+                <div id="loan-results"></div>
+            </div>
+
+            <!-- Tab 2: Scoring -->
+            <div id="scoring" class="tab-content">
+                <div class="select-group">
+                    <span class="select-label">1. Situation Professionnelle (25 pts)</span>
+                    <label class="radio-option">
+                        <input type="radio" name="emploi" value="25" onchange="updateScore()">
+                        Fonctionnaire <span class="score-points">25 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="emploi" value="20" onchange="updateScore()">
+                        Salarié grande entreprise <span class="score-points">20 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="emploi" value="15" onchange="updateScore()" checked>
+                        Salarié PME <span class="score-points">15 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="emploi" value="12" onchange="updateScore()">
+                        Indépendant/Commerçant <span class="score-points">12 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="emploi" value="8" onchange="updateScore()">
+                        Petit commerce <span class="score-points">8 pts</span>
+                    </label>
+                </div>
+
+                <div class="select-group">
+                    <span class="select-label">2. Revenus Mensuels (30 pts)</span>
+                    <label class="radio-option">
+                        <input type="radio" name="revenus_score" value="30" onchange="updateScore()">
+                        > 1 000 000 FCFA <span class="score-points">30 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="revenus_score" value="25" onchange="updateScore()" checked>
+                        500 000 - 1 000 000 FCFA <span class="score-points">25 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="revenus_score" value="18" onchange="updateScore()">
+                        300 000 - 500 000 FCFA <span class="score-points">18 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="revenus_score" value="10" onchange="updateScore()">
+                        < 300 000 FCFA <span class="score-points">10 pts</span>
+                    </label>
+                </div>
+
+                <div class="select-group">
+                    <span class="select-label">3. Historique Crédit (20 pts)</span>
+                    <label class="radio-option">
+                        <input type="radio" name="historique" value="20" onchange="updateScore()">
+                        Excellent - Jamais de retard <span class="score-points">20 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="historique" value="15" onchange="updateScore()" checked>
+                        Bon - Retards occasionnels <span class="score-points">15 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="historique" value="10" onchange="updateScore()">
+                        Nouveau client <span class="score-points">10 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="historique" value="5" onchange="updateScore()">
+                        Moyen - Retards fréquents <span class="score-points">5 pts</span>
+                    </label>
+                </div>
+
+                <div class="select-group">
+                    <span class="select-label">4. Adresse Vérifiée (15 pts)</span>
+                    <label class="radio-option">
+                        <input type="radio" name="adresse" value="15" onchange="updateScore()" checked>
+                        Oui - Géolocalisation certifiée <span class="score-points">15 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="adresse" value="10" onchange="updateScore()">
+                        Oui - Vérification manuelle <span class="score-points">10 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="adresse" value="5" onchange="updateScore()">
+                        Partiellement <span class="score-points">5 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="adresse" value="0" onchange="updateScore()">
+                        Non vérifiée <span class="score-points">0 pts</span>
+                    </label>
+                </div>
+
+                <div class="select-group">
+                    <span class="select-label">5. Garanties (10 pts)</span>
+                    <label class="radio-option">
+                        <input type="radio" name="garanties" value="10" onchange="updateScore()">
+                        Hypothèque/Titre foncier <span class="score-points">10 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="garanties" value="7" onchange="updateScore()" checked>
+                        Caution solidaire <span class="score-points">7 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="garanties" value="4" onchange="updateScore()">
+                        Domiciliation salaire <span class="score-points">4 pts</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="garanties" value="0" onchange="updateScore()">
+                        Aucune <span class="score-points">0 pts</span>
+                    </label>
+                </div>
+
+                <button class="btn btn-primary" onclick="updateScore()">📊 Calculer Score</button>
+            </div>
+        </div>
+
+        <!-- Right Column: Results -->
+        <div class="card">
+            <h2 class="card-title">📈 Résultats d'Analyse</h2>
+            
+            <div id="results-area">
+                <div style="text-align: center; padding: 50px 20px; color: #999;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📊</div>
+                    <div style="font-size: 16px;">Remplissez le formulaire pour voir les résultats</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section: Amortization Table -->
+    <div class="card" id="amortization-section" style="display: none;">
+        <h2 class="card-title">📅 Tableau d'Amortissement</h2>
+        <div id="amortization-table"></div>
+    </div>
+</div>
+
+<script>
+    // Switch between tabs
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+        
+        if (tabName === 'simulation') {
+            calculateLoan();
+        } else {
+            updateScore();
+        }
+    }
+
+    // Calculate loan simulation
+    function calculateLoan() {
+        const montant = parseFloat(document.getElementById('montant').value) || 0;
+        const duree = parseFloat(document.getElementById('duree').value) || 0;
+        const tauxAnnuel = parseFloat(document.getElementById('taux').value) || 0;
+        const revenus = parseFloat(document.getElementById('revenus').value) || 0;
+        const charges = parseFloat(document.getElementById('charges').value) || 0;
+
+        if (montant === 0 || duree === 0) return;
+
+        const tauxMensuel = tauxAnnuel / 100 / 12;
+        const mensualite = montant * (tauxMensuel * Math.pow(1 + tauxMensuel, duree)) / (Math.pow(1 + tauxMensuel, duree) - 1);
+        const coutTotal = (mensualite * duree) - montant;
+        const totalRembourser = montant + coutTotal;
+        
+        const resteAVivre = revenus - charges - mensualite;
+        const tauxEndettement = ((charges + mensualite) / revenus) * 100;
+
+        let decision, alertClass;
+        if (tauxEndettement > 50) {
+            decision = "❌ REFUSÉ - Endettement > 50%";
+            alertClass = "alert-danger";
+        } else if (tauxEndettement > 40) {
+            decision = "⚠️ ATTENTION - Endettement élevé";
+            alertClass = "alert-warning";
+        } else if (resteAVivre < 100000) {
+            decision = "⚠️ ATTENTION - Reste à vivre faible";
+            alertClass = "alert-warning";
+        } else {
+            decision = "✅ DOSSIER ACCEPTABLE";
+            alertClass = "alert-success";
+        }
+
+        const resultsHTML = `
+            <div class="result-box">
+                <div class="result-label">Mensualité</div>
+                <div class="result-value">${formatNumber(mensualite)} FCFA</div>
+                <div class="result-status">${duree} mensualités</div>
+            </div>
+
+            <div class="metric-row">
+                <div class="metric-card">
+                    <div class="metric-label">Coût total du crédit</div>
+                    <div class="metric-value">${formatNumber(coutTotal)} FCFA</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total à rembourser</div>
+                    <div class="metric-value">${formatNumber(totalRembourser)} FCFA</div>
+                </div>
+            </div>
+
+            <div class="metric-row">
+                <div class="metric-card">
+                    <div class="metric-label">Taux d'endettement</div>
+                    <div class="metric-value">${tauxEndettement.toFixed(1)}%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.min(tauxEndettement, 100)}%"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Reste à vivre</div>
+                    <div class="metric-value">${formatNumber(resteAVivre)} FCFA</div>
+                </div>
+            </div>
+
+            <div class="alert ${alertClass}">
+                <strong>${decision}</strong>
+            </div>
+        `;
+
+        document.getElementById('results-area').innerHTML = resultsHTML;
+
+        // Generate amortization table
+        generateAmortizationTable(montant, mensualite, tauxMensuel, duree);
+    }
+
+    // Generate amortization table
+    function generateAmortizationTable(capital, mensualite, tauxMensuel, duree) {
+        let tableHTML = `
+            <table class="amortization-table">
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Capital restant</th>
+                        <th>Intérêts</th>
+                        <th>Capital amorti</th>
+                        <th>Mensualité</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        let capitalRestant = capital;
+
+        for (let i = 1; i <= Math.min(duree, 12); i++) {
+            const interets = capitalRestant * tauxMensuel;
+            const capitalAmorti = mensualite - interets;
+            
+            tableHTML += `
+                <tr>
+                    <td>${i}</td>
+                    <td>${formatNumber(capitalRestant)}</td>
+                    <td>${formatNumber(interets)}</td>
+                    <td>${formatNumber(capitalAmorti)}</td>
+                    <td>${formatNumber(mensualite)}</td>
+                </tr>
+            `;
+
+            capitalRestant -= capitalAmorti;
+        }
+
+        if (duree > 12) {
+            tableHTML += `
+                <tr>
+                    <td colspan="5" style="text-align: center; color: #888; font-style: italic;">
+                        ... ${duree - 12} autres mois ...
+                    </td>
+                </tr>
+            `;
+        }
+
+        tableHTML += `
+                </tbody>
+            </table>
+        `;
+
+        document.getElementById('amortization-table').innerHTML = tableHTML;
+        document.getElementById('amortization-section').style.display = 'block';
+    }
+
+    // Update scoring
+    function updateScore() {
+        const emploi = parseInt(document.querySelector('input[name="emploi"]:checked')?.value || 0);
+        const revenus = parseInt(document.querySelector('input[name="revenus_score"]:checked')?.value || 0);
+        const historique = parseInt(document.querySelector('input[name="historique"]:checked')?.value || 0);
+        const adresse = parseInt(document.querySelector('input[name="adresse"]:checked')?.value || 0);
+        const garanties = parseInt(document.querySelector('input[name="garanties"]:checked')?.value || 0);
+
+        const scoreTotal = emploi + revenus + historique + adresse + garanties;
+        const scorePourcentage = scoreTotal;
+
+        let decision, alertClass, recommendation;
+        if (scoreTotal >= 85) {
+            decision = "✅ EXCELLENT";
+            alertClass = "alert-success";
+            recommendation = "Crédit APPROUVÉ - Conditions favorables";
+        } else if (scoreTotal >= 70) {
+            decision = "✅ BON";
+            alertClass = "alert-success";
+            recommendation = "Crédit APPROUVÉ - Conditions standard";
+        } else if (scoreTotal >= 55) {
+            decision = "⚠️ MOYEN";
+            alertClass = "alert-warning";
+            recommendation = "À ÉTUDIER - Garanties renforcées recommandées";
+        } else if (scoreTotal >= 40) {
+            decision = "⚠️ FAIBLE";
+            alertClass = "alert-warning";
+            recommendation = "REFUS ou montant réduit + garanties solides";
+        } else {
+            decision = "❌ TRÈS FAIBLE";
+            alertClass = "alert-danger";
+            recommendation = "REFUS RECOMMANDÉ - Risque trop élevé";
+        }
+
+        const resultsHTML = `
+            <div class="score-gauge">
+                <div class="gauge-bg">
+                    <div class="gauge-fill" style="width: ${scorePourcentage}%"></div>
+                </div>
+                <div class="gauge-value">${scoreTotal}<span style="font-size: 24px;">/100</span></div>
+                <div class="gauge-labels">
+                    <span>Faible</span>
+                    <span>Moyen</span>
+                    <span>Bon</span>
+                    <span>Excellent</span>
+                </div>
+            </div>
+
+            <div class="alert ${alertClass}">
+                <div>
+                    <strong>${decision}</strong><br>
+                    ${recommendation}
+                </div>
+            </div>
+
+            <div class="criteria-list">
+                <div class="criteria-item">
+                    <span class="criteria-name">💼 Situation Professionnelle</span>
+                    <span class="criteria-score">${emploi}/25</span>
+                </div>
+                <div class="criteria-item">
+                    <span class="criteria-name">💰 Revenus Mensuels</span>
+                    <span class="criteria-score">${revenus}/30</span>
+                </div>
+                <div class="criteria-item">
+                    <span class="criteria-name">📊 Historique Crédit</span>
+                    <span class="criteria-score">${historique}/20</span>
+                </div>
+                <div class="criteria-item">
+                    <span class="criteria-name">📍 Adresse Vérifiée</span>
+                    <span class="criteria-score">${adresse}/15</span>
+                </div>
+                <div class="criteria-item">
+                    <span class="criteria-name">🔒 Garanties</span>
+                    <span class="criteria-score">${garanties}/10</span>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('results-area').innerHTML = resultsHTML;
+
+        // Animate gauge
+        setTimeout(() => {
+            document.querySelector('.gauge-fill').style.width = scorePourcentage + '%';
+        }, 100);
+    }
+
+    // Format number with spaces
+    function formatNumber(num) {
+        return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
+    // Initialize
+    calculateLoan();
+</script>
+```
+
+</body>
+</html>
